@@ -23,6 +23,7 @@ We welcome submissions covering the 3 major public clouds - AWS, Azure and GCP i
 * CfS for training days close **February 28th**
 * CfS for general sessions close **March 31st** 
 
+
 ## Code of Conduct
 
 DataSaturday Oslo strives for diversity and transparency. You can read our [CoC here](/code-of-conduct).
