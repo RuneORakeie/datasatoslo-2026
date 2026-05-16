@@ -41,7 +41,7 @@ other = "Come join us at @datasatoslo, the unavoidable conference for Data Profe
 other = "Share on Twitter"
 
 [bluesky_share_text]
-other = "Come join us August 30th at @datasatoslo.bsky.social, the unavoidable conference for Data Professionals #DataSatOslo #sqlfamily. For more info checkout https://datasaturday.no"
+other = "Come join us August 29th at @datasatoslo.bsky.social, the unavoidable conference for Data Professionals #DataSatOslo #sqlfamily. For more info checkout https://datasaturday.no"
 
 [bluesky_share_label]
 other = "Share on Bluesky"
@@ -68,7 +68,7 @@ other = "Previous events"
 other = "Become partner"
 
 [footer_become_partners_label]
-other = "Partnership Proposition"
+other = "Sponsorship opportunities"
 
 [footer_coc]
 other = "Code of Conduct"

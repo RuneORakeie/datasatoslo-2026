@@ -34,7 +34,7 @@ content:
   - title: footer_previous_edition
     links:
       - name: Data Saturday Oslo 2025
-        url: https://2025.datasatoslo.com/
+        url: https://2025.datasaturday.no/
         newTab: true
       - name: Data Saturday Oslo 2024
         url: https://datasaturdays.com/Event/20240831-datasaturday0052/
@@ -42,12 +42,9 @@ content:
       - name: Data Saturday Oslo 2023
         url: https://datasaturdays.com/Event/20230902-datasaturday0035/
         newTab: true
-      - name: Data Saturday Oslo 2022
-        url: https://datasaturdays.com/Event/20220910-datasaturday0023/
-        newTab: true
 
-#  - title: footer_become_partners
-#    links:
-#      - nameKey: footer_become_partners_label
-#        url: https://docs.google.com/presentation/d/e/2PACX-1vR9oEvhN0eKW6KeMqJzYZt1AtwiO5eyRhWcy6cXfE63vtZzX8U9B8_r2LpO6WIwDWjOoLkf10G7tFGO/pub?start=false&loop=true&delayms=0&slide=id.g376bab0a27_1_7
-#        newTab: true        
+  - title: footer_become_partners
+    links:
+      - nameKey: footer_become_partners_label
+        url: /documents/datasatoslo-sponsorplan-2026.pdf
+        newTab: true        

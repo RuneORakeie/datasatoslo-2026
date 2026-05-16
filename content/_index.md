@@ -20,14 +20,14 @@ menu:
 <a class="btn primary btn-lg" href="https://sessionize.com/data-saturday-oslo-2025/" target="_blank">
     <svg class="icon icon-cfp"><use xlink:href="#cfp"></use></svg>Submit a presentation
 </a>
- 
-<a class="btn primary btn-lg" href="https://datasatoslo25.eventbrite.com" target="_blank">
+--> 
+<a class="btn primary btn-lg" href="https://datasatoslo26.eventbrite.com" target="_blank">
     <svg class="icon icon-ticket"><use xlink:href="#ticket"></use></svg>Register for Saturday
 </a>
--->
+
 {{% /jumbo %}}
 
-{{% home-info what="Participants:300+,Pre-cons:2,Sessions:36,Parallel Tracks:6" class="primary" %}}
+{{% home-info what="Participants:300+,Sessions:36,Parallel Tracks:6" class="primary" %}}
 ## What is Data Saturday Oslo?
 
 Data Saturday Oslo is a training event for professionals who use data platform capabilities either on-premises or in one or more of the 3 major public clouds Amazon Web Services, Microsoft Azure or Google Cloud Platform.  
@@ -70,16 +70,33 @@ Data Saturday Oslo is an event run by volunteers from the #datacommunity/#sqlcom
 {{% /home-subscribe %}}
 -->
 <!-- ... -->
-<!-- Ticketing not open yet
+<!-- Ticketing not open yet-->
 {{% home-tickets %}}
 ### {#tickets}
 ## Tickets
 
 <ul>
+<li>{{% ticket name="Super Early Birds"
+           starts="2025-01-25"
+           ends="2026-08-01"
+           price=50
+           currency="Kr."
+           info="50 first sold tickets"
+           soldOut=false
+           url="https://datasatoslo26.eventbrite.com" %}}</li>
+<li>{{% ticket name="Early Birds"
+           starts="2025-08-01"
+           ends="2026-08-30"
+           price=100
+           currency="Kr."
+           info="51-100 first sold tickets"
+           soldOut=false
+           notInSale=true
+           url="https://datasatoslo26.eventbrite.com" %}}</li>
 <li>{{% ticket name="Normal"
            starts="2026-01-01"
            ends="2026-08-29"
-           price=100
+           price=250
            currency="Kr."
            info="lunch included"
            soldOut=false
