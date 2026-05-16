@@ -4,7 +4,7 @@
 	<header class="tag-{{ anchorize (delimit (.Params.tags | default (slice))  "" ) }}">
 	<div class="tags">
 		{{ range .Params.tags }}
-			{{ range first 1 (where hugo.Data.categories "key" .) }}
+			{{ range first 1 (where site.Data.categories "key" .) }}
 			<span>{{ .name }}</span>
 			{{ end }}
 		{{ end }}

@@ -25,14 +25,14 @@
 
 {{ if .Params.why }}
 <section class="why">
-	<h2>{{index hugo.Data.partner "en" "why" }}</h2>
+	<h2>{{index site.Data.partner "en" "why" }}</h2>
 	<p>{{ .Params.why }}</p>
 </section>
 {{ end }}
 
 {{ if .Params.socials }}
 <section class="socials">
-	<h2>{{index hugo.Data.partner "en" "socials" }}</h2>
+	<h2>{{index site.Data.partner "en" "socials" }}</h2>
 	<ul>
 		{{ range .Page.Params.socials }}
 		<li>
@@ -48,7 +48,7 @@
 
 {{ if .Params.jobs }}
 <section class="jobs">
-	<h2>{{index hugo.Data.partner "en" "jobs" }}</h2>
+	<h2>{{index site.Data.partner "en" "jobs" }}</h2>
 	<ul>
 		{{ range .Page.Params.jobs }}
 		<li class="job">
