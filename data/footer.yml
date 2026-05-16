@@ -1,0 +1,53 @@
+share:
+  - name: bluesky
+    url: https://bsky.app/intent/compose?text=
+  - name: linkedin
+    url: https://www.linkedin.com/sharing/share-offsite/?url=
+  - name: facebook
+    url: https://www.facebook.com/sharer.php?u=
+  - name: twitter
+    url: https://twitter.com/intent/tweet?text=
+
+follow:
+#  - name: facebook
+#    url: https://www.facebook.com/GDGToulouse/
+  - name: bluesky
+    url: https://bsky.app/profile/datasatoslo.bsky.social
+  - name: linkedin
+    url: https://www.linkedin.com/company/datasaturday-oslo/
+#  - name: youtube
+#    url: https://www.youtube.com/channel/UCx83f-KzDd3o1QK2AdJIftg
+
+content:
+  - title: footer_about
+    links:
+      - name: Data Saturdays (Global)
+        url: https://datasaturdays.com/
+        newTab: true
+      - name: SQL Saturday (Global)
+        url: http://sqlsaturday.com/
+        newTab: true
+      - nameKey: footer_coc
+        url: /code-of-conduct/
+        newTab: false
+
+  - title: footer_previous_edition
+    links:
+      - name: Data Saturday Oslo 2025
+        url: https://datasatoslo.com/
+        newTab: true
+      - name: Data Saturday Oslo 2024
+        url: https://datasaturdays.com/Event/20240831-datasaturday0052/
+        newTab: true
+      - name: Data Saturday Oslo 2023
+        url: https://datasaturdays.com/Event/20230902-datasaturday0035/
+        newTab: true
+      - name: Data Saturday Oslo 2022
+        url: https://datasaturdays.com/Event/20220910-datasaturday0023/
+        newTab: true
+
+#  - title: footer_become_partners
+#    links:
+#      - nameKey: footer_become_partners_label
+#        url: https://docs.google.com/presentation/d/e/2PACX-1vR9oEvhN0eKW6KeMqJzYZt1AtwiO5eyRhWcy6cXfE63vtZzX8U9B8_r2LpO6WIwDWjOoLkf10G7tFGO/pub?start=false&loop=true&delayms=0&slide=id.g376bab0a27_1_7
+#        newTab: true        

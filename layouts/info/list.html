@@ -1,0 +1,107 @@
+{{ define "main" }}
+
+{{ $lang := .Site.Language.Lang }}
+
+<div id="protectedContent" style="display: none;">
+    <div class="hero">
+        <h1>{{ $.Page.Params.Title }}</h1>
+        <div class="description">
+            {{ .Content }}
+        </div>
+    </div>
+
+
+        <section class="blogs">
+            {{ range .Pages }}
+            <article>
+                <a class="visually-hidden" aria-hidden="true" href="{{ .Permalink }}">{{ .Title }}</a>
+                <a class="blog" href="{{ .Permalink }}">
+                    {{ $img := (replace .Params.image "." "-mini.") }}
+                    {{ partial "picture" (dict "img" $img "class" "img") }}
+                    
+                    <div class="info">
+                        <div class="date">{{ partial "date-short.html" (dict "time" .Date "lang" $lang) }}</div>
+                        <h2>{{ .Title }}</h2>
+                        <span class="brief">{{ .Params.brief }}</span>
+                        <p>{{ replace (.Summary | plainify) "\n" "</p><p>" | safeHTML | truncate 300 }}
+                    </div>
+                </a>
+            </article>
+            {{ end }}
+        </section>
+</div>
+
+<div id="passwordPrompt" class="password-prompt">
+    <h2>Enter Password</h2>
+    <input type="password" id="passwordInput" />
+    <a class="btn primary btn-lg" onclick="verifyPassword()">Submit</a>
+</div>
+
+<script>
+// SHA-256 hash of the password
+const HASH = '27a2ec7095dd3c011afc11d171bf7c96050bfd349c053468499d10a8095201ad'; // This is the hash of "password"
+
+async function sha256(message) {
+    const msgBuffer = new TextEncoder().encode(message);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    return hashHex;
+}
+
+async function verifyPassword() {
+    const input = document.getElementById('passwordInput').value;
+    const inputHash = await sha256(input);
+    
+    if (inputHash === HASH) {
+        document.getElementById('passwordPrompt').style.display = 'none';
+        document.getElementById('protectedContent').style.display = 'block';
+        sessionStorage.setItem('isAuthenticated', 'true');
+    } else {
+        alert('Incorrect password');
+    }
+}
+
+// Check if already authenticated
+window.onload = function() {
+    if (sessionStorage.getItem('isAuthenticated') === 'true') {
+        document.getElementById('passwordPrompt').style.display = 'none';
+        document.getElementById('protectedContent').style.display = 'block';
+    }
+}
+
+// Handle Enter key
+document.getElementById('passwordInput').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        verifyPassword();
+    }
+});
+</script>
+
+<style>
+.password-prompt {
+    max-width: 400px;
+    margin: 100px auto;
+    text-align: center;
+    padding: 20px;
+}
+
+.password-prompt input {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 8px;
+}
+
+.password-prompt button {
+    padding: 8px 20px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+</style>
+
+{{ end }}

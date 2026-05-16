@@ -1,0 +1,13 @@
+
+{{- $img := "" -}}
+{{- if .Params.logo -}}
+  {{- $img = .Params.logo -}}
+{{- else -}}
+  {{- $path := path.Join "images" "partners" .Params.category .Params.key -}}
+  {{- $img = printf "%s.%s" (relURL $path) "png" -}}
+{{- end -}}
+
+<a class="partner" href="{{ .RelPermalink }}" title="{{ .Title }}">
+  <img src="{{ $img }}" alt="{{ .Title }}" loading="lazy">
+  <span class="visually-hidden">{{ .Title }}</span>
+</a>

@@ -1,0 +1,67 @@
+theme = "devfest-theme-hugo"
+
+enableEmoji = true
+enableRobotsTXT = true
+enableMissingTranslationPlaceholders = true
+
+[markup]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[build]
+  writeStats = true
+
+  [build.buildStats]
+    enable = true
+
+[security]
+  enableInlineShortcodes = false
+  enableRemoteDataSources = true
+  [security.exec]
+    allow = ['^dart-sass-embedded$', '^go$', '^npx$', '^postcss$']
+    osEnv = ['(?i)^(PATH|PATHEXT|APPDATA|TMP|TEMP|TERM)$']
+
+  [security.funcs]
+    getenv = ['^HUGO_']
+
+  [security.http]
+    methods = ['(?i)GET|POST']
+    urls = ['.*']
+
+[taxonomies]
+  tag = "tags"
+
+[languages]
+  [languages.en]
+    weight = 1
+    label = "en-us"
+
+[server]
+  [[server.headers]]
+    for = "/api/*"
+    [server.headers.values]
+      Access-Control-Allow-Origin = "*"
+
+[params]
+  title = "Data Saturday Oslo 2026"
+  date = "2026-08-29"
+  description = "Data Saturday Oslo is a technical conference for current or coming data professionals. It is aimed at students, professionals or simply curious technophiles."
+  images = ["/images/social-share.jpg"]
+  email = "contactus@datasaturday.no"
+  keywords = "event, datacommunity, data, gcp, microsoft, aws, fabric, databricks, sqlserver, cloud, sqlfamily"
+  copyright = "from Data Saturday Oslo with :heart:️"
+  cfpUrl = "https://sessionize.com/data-saturday-oslo-2026/"
+  appleTouchIcon = "/apple-touch-icon.png"
+  favicon32 = "/favicon-32x32.png"
+  favicon16 = "/favicon-16x16.png"
+  manifest = "/manifest.json"
+  safariPinnedTab = "/safari-gpinned-tab.svg"
+  customCSS = ["/css/custom.css"]
+  googleWebmasterKey = "googleXXXXXXX" # https://support.google.com/webmasters/answer/9008080#html_verification
+  googleAnalytics = "G-2JJ1THLSVW" # Leave empty if you don't want to use Google Analytics
+
+  [params.logos]
+    jumbo = "/images/logos/datasatoslo_color_text.png"
+    header = "/images/logos/datasatoslo_color_text.png"
+    footer = "/images/logos/datasatoslo_gray_text.png"
+

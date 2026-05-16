@@ -1,0 +1,73 @@
+{{ define "main" }}
+
+<section class="header">
+	{{- $img := "" -}}
+	{{- if .Params.logo -}}
+	{{- $img = .Params.logo -}}
+	{{- else -}}
+	{{- $path := path.Join "images" "partners" .Params.category .Params.key -}}
+	{{- $img = printf "%s.%s" (relURL $path) "png" -}}
+	{{- end -}}
+
+	<div class="card"
+		style="background-image: url('{{ $img }}');">
+	</div>
+
+	<h1>{{ .Title }}</h1>
+	{{ if .Params.website }}
+	<a href="{{ .Params.website }}" target="_blank" rel="noopener noreferrer">{{ .Params.website }}</a>
+	{{ end }}
+</section>
+
+<section class="content">
+	{{ .Content }}
+</section>
+
+{{ if .Params.why }}
+<section class="why">
+	<h2>{{index hugo.Data.partner "en" "why" }}</h2>
+	<p>{{ .Params.why }}</p>
+</section>
+{{ end }}
+
+{{ if .Params.socials }}
+<section class="socials">
+	<h2>{{index hugo.Data.partner "en" "socials" }}</h2>
+	<ul>
+		{{ range .Page.Params.socials }}
+		<li>
+			<a href="{{ .link }}" class="social" rel="noopener noreferrer" target="_blank">
+				{{ partial "icon.html" .icon }}
+				{{ .name }}
+			</a>
+		</li>
+		{{ end }}
+	</ul>
+</section>
+{{ end }}
+
+{{ if .Params.jobs }}
+<section class="jobs">
+	<h2>{{index hugo.Data.partner "en" "jobs" }}</h2>
+	<ul>
+		{{ range .Page.Params.jobs }}
+		<li class="job">
+			<header>
+				<a href="{{ .url }}" rel="noopener noreferrer" target="_blank">{{ .title }}</a>
+			</header>
+			<div class="city">
+				{{ partial "icon.html" "map-marker" }}
+				{{ .city }}
+			</div>
+			<a href="mailto:{{ .contact }}" class="contact">
+				{{ partial "icon.html" "email" }}
+				{{ .contact }}
+			</a>
+		</li>
+		{{ end }}
+	</ul>
+</section>
+{{ end }}
+
+
+{{ end }}

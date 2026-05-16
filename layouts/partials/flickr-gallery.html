@@ -1,0 +1,768 @@
+{{/* layouts/partials/flickr-gallery.html */}}
+{{ $photosPerPage := 20 }}
+
+<div class="loading-spinner"></div>
+
+<div class="gallery-wrapper">
+    <div class="flickr-gallery">
+        {{ if .Params.albums }}
+        {{ range $index, $album := .Params.albums }}
+
+        <div class="flickr-album{{ if and (gt $index 0) (not $album.title) }} hidden-album{{ end }}"
+            data-album-id="{{ $album.album_id | default "" }}" data-user-id="{{ $album.user_id | default "" }}"
+            data-album-index="{{ $index }}" data-needs-photos="true" {{ with $album.youtube_videos }}
+            data-youtube='{{ . | jsonify }}' {{ end }}>
+            {{ if $album.title }}
+            <h3 class="album-title">{{ $album.title }}</h3>
+            {{ end }}
+            <div class="photos" data-loaded-photos="{{ $photosPerPage }}" data-current-page="1"
+                data-is-last-album="{{ eq $index (sub (len $.Params.albums) 1) }}">
+                <div class="scroll-sentinel"></div>
+            </div>
+        </div>
+        {{ end }}
+
+        {{ else }}
+
+        {{ $albumId := "" }}
+        {{ $userId := "" }}
+        {{ $albumId = .Params.album_id }}
+        {{ $userId = .Params.user_id }}
+
+        <div class="flickr-album" data-album-id="{{ $albumId }}" data-user-id="{{ $userId }}" data-album-index="0"
+            data-needs-photos="true">
+            <div class="photos" data-loaded-photos="{{ $photosPerPage }}" data-current-page="1"
+                data-is-last-album="true">
+                <div class="scroll-sentinel"></div>
+            </div>
+        </div>
+
+        {{ end }}
+    </div>
+</div>
+<script>
+    const LOG_LEVEL = {
+        NONE: 0,
+        ERROR: 1,
+        WARN: 2,
+        INFO: 3,
+        DEBUG: 4
+    };
+
+    const CURRENT_LOG_LEVEL = LOG_LEVEL.ERROR;  // Change this to set logging level
+
+    function log(level, ...args) {
+        if (level <= CURRENT_LOG_LEVEL) {
+            switch (level) {
+                case LOG_LEVEL.ERROR:
+                    console.error(...args);
+                    break;
+                case LOG_LEVEL.WARN:
+                    console.warn(...args);
+                    break;
+                case LOG_LEVEL.INFO:
+                case LOG_LEVEL.DEBUG:
+                    console.log(...args);
+                    break;
+            }
+        }
+    }
+    document.addEventListener('DOMContentLoaded', async function () {
+        // 1️⃣ Determine if running locally or in Azure
+        const isLocal = window.location.hostname === "localhost";
+        const loadingSpinner = document.querySelector('.loading-spinner');
+        let isLoading = false;
+        let currentAlbumIndex = 0;
+        let allPhotosLoaded = false;
+        let mediaContainers = [];
+        let currentIndex = -1;
+
+        function showLoading() {
+            isLoading = true;
+            loadingSpinner.classList.add('visible');
+        }
+
+        function hideLoading() {
+            isLoading = false;
+            loadingSpinner.classList.remove('visible');
+        }
+
+
+        function adjustFooterPosition() {
+            const footer = document.querySelector("body > footer");
+            const mainContent = document.querySelector("main");
+            const galleryWrapper = document.querySelector(".gallery-wrapper");
+
+            if (!galleryWrapper || !footer || !mainContent) return;
+
+            requestAnimationFrame(() => {
+                const galleryBottom = galleryWrapper.getBoundingClientRect().bottom + window.scrollY;
+                const footerHeight = footer.offsetHeight;
+                const viewportHeight = window.innerHeight;
+                const currentBodyHeight = document.documentElement.scrollHeight;
+
+                const newHeight = Math.max(galleryBottom + footerHeight, viewportHeight);
+                if (Math.abs(newHeight - currentBodyHeight) > 5) {
+                    document.body.style.height = `${newHeight}px`;
+                    mainContent.style.minHeight = `${newHeight - footerHeight}px`;
+                }
+            });
+        }
+
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    if (img.classList.contains('unloaded')) {
+                        showLoading();
+                        const container = img.closest('.video-container, .photo-container');
+
+                        if (container && container.classList.contains('video-container')) {
+                            // Handle video thumbnails
+                            const photoId = container.dataset.photoId;
+                            const userId = container.dataset.userId;
+                            // getVideoThumbnail(photoId, userId, flickrApiKey).then(thumbnailUrl => {
+                            //     if (thumbnailUrl) {
+                            //         img.src = thumbnailUrl;
+                            //     }
+                            //     img.classList.remove('unloaded');
+                            //     hideLoading();
+                            // });
+                            getVideoThumbnail(photoId, userId, FLICKR_API_KEY).then(thumbnailUrl => {
+                                if (thumbnailUrl) {
+                                    img.src = thumbnailUrl;
+                                }
+                                img.classList.remove('unloaded');
+                                hideLoading();
+                            });
+                        } else {
+                            // Handle regular photos - simple and direct
+                            img.src = img.dataset.src;
+                            img.classList.remove('unloaded');
+                            hideLoading();
+                        }
+                        adjustFooterPosition();
+                    }
+                    observer.unobserve(img);
+                }
+            });
+        }, {
+            rootMargin: '50px 0px',
+            threshold: 0.1
+        });
+
+        // Your Flickr API key - replace with your actual key
+        const FLICKR_API_KEY = '831c50c7b4a4c4afa5e0db491300428d';
+
+        // async function fetchFlickrApiKey() {
+        //     return "831c50c7b4a4c4afa5e0db491300428d";
+        //     // const apiUrl = isLocal
+        //     //     ? "http://localhost:7071/api/GetFlickrKey"  // Local function
+        //     //     : "/api/GetFlickrKey";  // Azure function
+
+        //     // try {
+        //     //     const response = await fetch(apiUrl);
+        //     //     const data = await response.json();
+        //     //     if (data.apiKey) {
+        //     //         // Log API key for debugging
+        //     //         log(LOG_LEVEL.DEBUG, '✅ Flickr API Key Retrieved:', JSON.stringify(data.apiKey));
+        //     //         return data.apiKey.trim(); // Remove extra spaces if needed
+        //     //     }
+        //     //     throw new Error('No API key in response');
+        //     // } catch (error) {
+        //     //     log(LOG_LEVEL.ERROR, 'Error fetching Flickr API key:', error);
+        //     //     return null;
+        //     // }
+        // }
+
+        async function fetchAlbumPhotos(albumId, userId) {
+            // const apiUrl = isLocal
+            //     ? `http://localhost:7071/api/GetFlickrKey?method=flickr.photosets.getPhotos&photoset_id=${albumId}&user_id=${userId}&extras=media,url_q,url_m`
+            //     : `/api/GetFlickrKey?method=flickr.photosets.getPhotos&photoset_id=${albumId}&user_id=${userId}&extras=media,url_q,url_m`;
+
+            // Direct Flickr API call
+            const apiUrl = `https://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=${FLICKR_API_KEY}&photoset_id=${albumId}&user_id=${userId}&extras=media,url_q,url_m,url_b&format=json&nojsoncallback=1`;
+
+            log(LOG_LEVEL.DEBUG, "📡 Fetching album photos from API:", apiUrl);
+
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    throw new Error(`API request failed with status ${response.status}`);
+                }
+
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                log(LOG_LEVEL.ERROR, "Error fetching album photos:", error);
+                return null;
+            }
+        }
+
+        function createVideoContainer(photo, index, userId) {
+            const container = document.createElement('a');
+            container.href = 'javascript:void(0);';
+            container.className = `photo-container video-container${index > 20 ? ' hidden' : ''}`;
+            container.dataset.mediaType = 'video';
+            container.dataset.photoId = photo.id;
+            container.dataset.userId = userId;
+            container.dataset.videoSecret = photo.secret;
+            container.dataset.server = photo.server;
+
+            const thumbnailUrl = photo.url_q || photo.url_m ||
+                `https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_q.jpg`;
+
+            container.innerHTML = `
+            <div class="video-thumbnail-wrapper">
+                <img src="${index <= 20 ? thumbnailUrl : 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'}"
+                    data-src="${thumbnailUrl}"
+                    alt="${photo.title}"
+                    class="lazy${index > 20 ? ' unloaded' : ''}">
+                <div class="play-button-overlay">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="play-icon">
+                        <path d="M8 5v14l11-7z" />
+                    </svg>
+                </div>
+            </div>
+        `;
+
+            return container;
+        }
+
+        function createPhotoContainer(photo, index) {
+            const container = document.createElement('a');
+            container.href = 'javascript:void(0);';
+            container.className = `photo-container${index > 20 ? ' hidden' : ''}`;
+
+            const thumbnailUrl = `https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_q.jpg`;
+            const fullSrc = `https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_b.jpg`;
+
+            container.dataset.fullSrc = fullSrc;
+            container.dataset.photoId = photo.id;
+
+            container.innerHTML = `
+            <img src="${index <= 20 ? thumbnailUrl : 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'}"
+                data-src="${thumbnailUrl}"
+                data-full-src="${fullSrc}"
+                alt="${photo.title}"
+                class="lazy${index > 20 ? ' unloaded' : ''}">
+        `;
+
+            return container;
+        }
+
+        function createYoutubeContainer(video, index) {
+            console.log('createYoutubeContainer defined');
+            const container = document.createElement('a');
+            container.href = 'javascript:void(0);';
+            container.className = `youtube-container${index > 20 ? ' hidden' : ''}`;
+            container.dataset.mediaType = 'youtube';
+            container.dataset.videoId = video.id;
+            container.dataset.title = video.title;
+
+            const thumbnailUrl = `https://img.youtube.com/vi/${video.id}/maxresdefault.jpg`;
+
+            container.innerHTML = `
+                <img src="${index <= 20 ? thumbnailUrl : ''}"
+                    data-src="${thumbnailUrl}"
+                    alt="${video.title}"
+                    class="youtube-thumbnail${index > 20 ? ' unloaded' : ''}">
+                <div class="youtube-play-overlay">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="play-icon">
+                        <path d="M8 5v14l11-7z" />
+                    </svg>
+                </div>
+            `;
+
+            return container;
+        }
+
+        async function loadAlbumPhotos(album) {
+            log(LOG_LEVEL.DEBUG, '📂 Loading album photos...');
+            const albumId = album.dataset.albumId;
+            const userId = album.dataset.userId;
+            const photosContainer = album.querySelector('.photos');
+            log(LOG_LEVEL.INFO, 'Album data:', { albumId, userId });
+
+            if (!photosContainer) return;
+            if ((!albumId || !userId) && !album.dataset.youtube) return;
+
+            // Load Flickr photos if album ID exists
+            if (albumId && userId && albumId !== "" && userId !== "") {
+                const data = await fetchAlbumPhotos(albumId, userId);
+                if (!data || data.stat !== 'ok') {
+                    album.innerHTML = `<div class="error-info">Error loading album: ${data?.message || 'Unknown error'}</div>`;
+                    return;
+                }
+                // Update total photos count
+                photosContainer.dataset.totalPhotos = data.photoset.photo.length;
+
+                // Create and append photo elements
+                data.photoset.photo.forEach((photo, index) => {
+                    if (photo.media === "video") {
+                        const videoContainer = createVideoContainer(photo, index, userId);
+                        photosContainer.insertBefore(videoContainer, photosContainer.querySelector('.scroll-sentinel'));
+                    } else {
+                        const photoContainer = createPhotoContainer(photo, index);
+                        photosContainer.insertBefore(photoContainer, photosContainer.querySelector('.scroll-sentinel'));
+                    }
+                });
+            }
+
+            // Load YouTube videos if present
+            if (album.dataset.youtube) {
+                try {
+                    const youtubeVideos = JSON.parse(album.dataset.youtube);
+                    youtubeVideos.forEach((video, index) => {
+                        console.log('Attempting to call createYoutubeContainer');
+                        const container = createYoutubeContainer(video, index);
+                        photosContainer.insertBefore(container, photosContainer.querySelector('.scroll-sentinel'));
+                    });
+
+                    // Update total photos count to include YouTube videos
+                    const currentTotal = parseInt(photosContainer.dataset.totalPhotos) || 0;
+                    photosContainer.dataset.totalPhotos = currentTotal + youtubeVideos.length;
+                } catch (error) {
+                    console.error('Error parsing YouTube data:', error);
+                }
+            }
+
+            // Initialize lazy loading for the first batch
+            initializeLazyLoading(album);
+            setupScrollDetection(photosContainer);
+
+            // Remove the loading flag
+            album.dataset.needsPhotos = "false";
+
+            // Update mediaContainers array
+            mediaContainers = Array.from(document.querySelectorAll('.photo-container, .video-container, .youtube-container'));
+        }
+
+        function loadNextAlbum() {
+            log(LOG_LEVEL.DEBUG, '🎬 Starting loadNextAlbum, current index:', currentAlbumIndex);
+            const nextAlbum = document.querySelector(`.flickr-album[data-album-index="${currentAlbumIndex + 1}"]`);
+            log(LOG_LEVEL.DEBUG, '🔍 Found next album:', nextAlbum ? 'Yes' : 'No');
+
+            if (nextAlbum) {
+                log(LOG_LEVEL.DEBUG, '📝 Next album state:', {
+                    isHidden: nextAlbum.classList.contains('hidden-album'),
+                    albumId: nextAlbum.dataset.albumId,
+                    index: nextAlbum.dataset.albumIndex
+                });
+
+            }
+
+            if (nextAlbum && nextAlbum.classList.contains('hidden-album')) {
+                log(LOG_LEVEL.DEBUG, '🔓 Revealing next album');
+                nextAlbum.classList.remove('hidden-album');
+                currentAlbumIndex++;
+
+                // Set up scroll detection for the newly revealed album
+                const photoContainer = nextAlbum.querySelector('.photos');
+                if (photoContainer) {
+                    log(LOG_LEVEL.DEBUG, '📸 Setting up photo container for next album');
+                    setupScrollDetection(photoContainer);
+
+                    // Show the first batch of photos
+                    const hiddenPhotos = Array.from(photoContainer.querySelectorAll('.photo-container.hidden'))
+                        .slice(0, 20);
+
+                    log(LOG_LEVEL.DEBUG, '🖼️ Found hidden photos:', hiddenPhotos.length);
+
+                    hiddenPhotos.forEach(photo => {
+                        photo.classList.remove('hidden');
+                        const img = photo.querySelector('img.unloaded');
+                        if (img) {
+                            imageObserver.observe(img);
+                        }
+                    });
+
+                    // Update the loaded photos count
+                    photoContainer.dataset.loadedPhotos = hiddenPhotos.length;
+                    adjustFooterPosition();
+                }
+
+                return true;
+            }
+            log(LOG_LEVEL.INFO, '❌ No next album to load');
+            return false;
+        }
+
+        function initializeLazyLoading(album) {
+            const photos = album.querySelectorAll('img.lazy:not(.unloaded)');
+            photos.forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+
+        function isInViewport(element) {
+            const rect = element.getBoundingClientRect();
+            const inView = rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) + 100;
+            log(LOG_LEVEL.DEBUG, '🎯 Sentinel viewport check:', {
+                bottom: rect.bottom,
+                threshold: window.innerHeight + 100,
+                inView: inView
+            });
+            return inView;
+        }
+
+        function loadMorePhotos(container) {
+            if (isLoading || !container) {
+                log(LOG_LEVEL.DEBUG, '⚠️ LoadMorePhotos blocked:', { isLoading, hasContainer: !!container });
+                return false;
+            }
+
+            const totalPhotos = parseInt(container.dataset.totalPhotos);
+            const loadedPhotos = parseInt(container.dataset.loadedPhotos);
+            const batchSize = 20;
+            const isLastAlbum = container.dataset.isLastAlbum === 'true';
+
+            log(LOG_LEVEL.INFO, '📊 LoadMorePhotos status:', {
+                totalPhotos,
+                loadedPhotos,
+                isLastAlbum,
+                hasNextAlbumFlag: container.dataset.nextAlbumLoaded
+            });
+
+            if (loadedPhotos >= totalPhotos - 1) {
+                log(LOG_LEVEL.DEBUG, '🔄 All photos loaded in current album, checking for next album...');
+                if (!isLastAlbum && !container.dataset.nextAlbumLoaded) {
+                    log(LOG_LEVEL.DEBUG, '➡️ Attempting to load next album...');
+                    container.dataset.nextAlbumLoaded = 'true';
+                    if (loadNextAlbum()) {
+                        log(LOG_LEVEL.DEBUG, '✅ Next album loaded successfully');
+                        return true;
+                    }
+                    log(LOG_LEVEL.DEBUG, '❌ Failed to load next album');
+                }
+                return false;
+            }
+
+            showLoading();
+            log(LOG_LEVEL.DEBUG, '📸 Loading more photos in current album');
+
+            const remainingPhotos = totalPhotos - loadedPhotos;
+            const photosToLoad = Math.min(batchSize, remainingPhotos);
+
+            const hiddenPhotos = Array.from(container.querySelectorAll('.photo-container.hidden'))
+                .slice(0, photosToLoad);
+
+            log(LOG_LEVEL.DEBUG, '🔢 Loading batch:', {
+                remainingPhotos,
+                photosToLoad,
+                hiddenPhotosFound: hiddenPhotos.length
+            });
+
+            if (hiddenPhotos.length > 0) {
+                log(LOG_LEVEL.DEBUG, '🖼️ Revealing batch of', hiddenPhotos.length, 'photos');
+                hiddenPhotos.forEach(photo => {
+                    photo.classList.remove('hidden');
+                    const img = photo.querySelector('img.unloaded');
+                    if (img) {
+                        imageObserver.observe(img);
+                    }
+                });
+
+                container.dataset.loadedPhotos = parseInt(container.dataset.loadedPhotos) + hiddenPhotos.length;
+                log(LOG_LEVEL.DEBUG, '✨ New loaded photos count:', container.dataset.loadedPhotos);
+
+                setTimeout(() => {
+                    hideLoading();
+                    adjustFooterPosition();
+                }, 100);
+                return true;
+            }
+
+            hideLoading();
+            return false;
+        }
+
+
+        function setupScrollDetection(container) {
+            if (!container) {
+                log(LOG_LEVEL.DEBUG, '⚠️ No container provided for scroll detection');
+                return;
+            }
+
+            const sentinel = container.querySelector('.scroll-sentinel');
+            if (!sentinel) {
+                log(LOG_LEVEL.DEBUG, '⚠️ No sentinel found in container');
+                return;
+            }
+
+            log(LOG_LEVEL.DEBUG, '👀 Setting up scroll detection for container');
+            const scrollObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    log(LOG_LEVEL.DEBUG, '🔄 Scroll intersection:', {
+                        isIntersecting: entry.isIntersecting,
+                        ratio: entry.intersectionRatio
+                    });
+                    if (entry.isIntersecting) {
+                        loadMorePhotos(container);
+                    }
+                });
+            }, {
+                rootMargin: '200px 0px',
+                threshold: 0.1
+            });
+
+            scrollObserver.observe(sentinel);
+        }
+
+        // Modal functionality
+        async function getVideoUrl(photoId) {
+            try {
+                log(LOG_LEVEL.DEBUG, 'Getting video URL for photo ID:', photoId);
+                const videoSource = `https://www.flickr.com/video_download.gne?id=${photoId}`;
+                log(LOG_LEVEL.DEBUG, 'Video source URL:', videoSource);
+                return videoSource;
+            } catch (error) {
+                log(LOG_LEVEL.ERROR, 'Error fetching video URL:', error);
+                return null;
+            }
+        }
+        function preloadAdjacentImages(currentIndex) {
+            // Preload next and previous images
+            [-1, 1].forEach(offset => {
+                const adjacentIndex = currentIndex + offset;
+                if (adjacentIndex >= 0 && adjacentIndex < mediaContainers.length) {
+                    const container = mediaContainers[adjacentIndex];
+                    if (!container.dataset.mediaType || container.dataset.mediaType === 'photo') {
+                        const img = container.querySelector('img');
+                        if (img && img.dataset.fullSrc) {
+                            const preloadImg = new Image();
+                            preloadImg.src = img.dataset.fullSrc;
+                        }
+                    }
+                }
+            });
+        }
+
+        async function openModal(index) {
+            if (index < 0 || index >= mediaContainers.length) return;
+
+            currentIndex = index;
+            const container = mediaContainers[index];
+            const mediaType = container.dataset.mediaType || 'photo';
+
+            // Remove any existing modal
+            const existingModal = document.querySelector('.photo-modal, .video-modal');
+            if (existingModal) existingModal.remove();
+
+            // Create modal with appropriate classes for video/photo
+            const modal = document.createElement('div');
+
+            modal.className = `photo-modal${mediaType === 'video' ? ' video-modal' : ''}`; // Add video-modal class for videos
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <button class="modal-prev" style="display: ${index === 0 ? 'none' : 'block'};"> < </button>
+                    <div class="modal-media-container"></div>
+                    <button class="modal-next" style="display: ${index === mediaContainers.length - 1 ? 'none' : 'block'};"> > </button>
+                    <button class="close-modal">&times;</button>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+
+            // Add event listeners
+            modal.querySelector('.modal-prev').addEventListener('click', () => navigateModal(-1));
+            modal.querySelector('.modal-next').addEventListener('click', () => navigateModal(1));
+            modal.querySelector('.close-modal').addEventListener('click', closeModal);
+            document.addEventListener('keydown', handleKeydown);
+
+            // Load initial content
+            await updateModalContent(index);
+            preloadAdjacentImages(index);
+        }
+
+
+        async function updateModalContent(index) {
+            log(LOG_LEVEL.DEBUG, 'Updating modal content for index:', index);
+            const modal = document.querySelector('.photo-modal');
+            if (!modal) {
+                log(LOG_LEVEL.DEBUG, 'No modal found');
+                return;
+            }
+
+            const container = mediaContainers[index];
+            const mediaType = container.dataset.mediaType || 'photo';
+            const mediaContainer = modal.querySelector('.modal-media-container');
+
+            log(LOG_LEVEL.DEBUG, 'Modal elements:', {
+                modal: !!modal,
+                mediaContainer: !!mediaContainer,
+                mediaType,
+                container: !!container
+            });
+
+            // Update navigation buttons
+            modal.querySelector('.modal-prev').style.display = index === 0 ? 'none' : 'block';
+            modal.querySelector('.modal-next').style.display = index === mediaContainers.length - 1 ? 'none' : 'block';
+
+
+            if (mediaType === 'youtube') {
+                log(LOG_LEVEL.DEBUG, 'YouTube video handling:', {
+                    videoId: container.dataset.videoId,
+                    container: container.outerHTML,
+                    modalClass: modal.className
+                });
+                modal.classList.add('youtube-modal');
+                const videoId = container.dataset.videoId;
+                mediaContainer.innerHTML = `
+                    <div class="video-wrapper">
+                        <iframe 
+                            width="100%" 
+                            height="100%" 
+                            src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0"
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                `;
+            } else if (mediaType === 'video') {
+                modal.classList.remove('youtube-modal');
+                log(LOG_LEVEL.DEBUG, 'Loading video content');
+                const photoId = container.dataset.photoId;
+                const userId = container.dataset.userId;
+                showLoading();
+
+                // Get the video URL and server details
+                const videoUrl = await getVideoUrl(photoId);
+                log(LOG_LEVEL.DEBUG, 'Video URL:', videoUrl);
+
+                hideLoading();
+
+                if (!videoUrl) {
+                    log(LOG_LEVEL.ERROR, 'Failed to get video URL');
+                    return;
+                }
+
+                mediaContainer.innerHTML = `
+                    <div class="video-wrapper">
+                        <video controls autoplay playsInline>
+                            <source src="${videoUrl}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                `;
+
+                // Add error handling for video
+                const video = mediaContainer.querySelector('video');
+                video.addEventListener('error', (e) => {
+                    log(LOG_LEVEL.ERROR, 'Video error:', video.error);
+                    mediaContainer.innerHTML = `
+                        <div class="video-error">
+                            <p>Sorry, the video could not be loaded.</p>
+                            <p>Error: ${video.error?.message || 'Unknown error'}</p>
+                        </div>
+                    `;
+                });
+
+            } else {
+                modal.classList.remove('youtube-modal');
+                const imgElement = container.querySelector('img');
+                const fullUrl = imgElement.dataset.fullSrc;
+                log(LOG_LEVEL.DEBUG, 'Loading image:', fullUrl);
+                mediaContainer.innerHTML = `<img src="${fullUrl}" alt="">`;
+            }
+        }
+
+        async function navigateModal(direction) {
+            const newIndex = currentIndex + direction;
+            if (newIndex < 0 || newIndex >= mediaContainers.length) return;
+
+            currentIndex = newIndex;
+            await updateModalContent(newIndex);
+            preloadAdjacentImages(newIndex);
+        }
+
+        function closeModal() {
+            const modal = document.querySelector('.photo-modal');
+            if (modal) modal.remove();
+            document.removeEventListener('keydown', handleKeydown);
+        }
+
+        function handleKeydown(event) {
+            if (event.key === 'ArrowRight') navigateModal(1);
+            if (event.key === 'ArrowLeft') navigateModal(-1);
+            if (event.key === 'Escape') closeModal();
+        }
+
+        // Initialize gallery
+        async function initializeGallery() {
+            log(LOG_LEVEL.DEBUG, '🚀 Starting gallery initialization');
+            showLoading();
+
+            // Load all albums that need photos, regardless of visibility
+            log(LOG_LEVEL.DEBUG, '🔍 Looking for albums to load...');
+            const albums = document.querySelectorAll('.flickr-album[data-needs-photos="true"]');
+            log(LOG_LEVEL.DEBUG, '📁 Found albums:', albums.length);
+
+            for (const album of albums) {
+                log(LOG_LEVEL.DEBUG, '💽 Loading album:', {
+                    id: album.dataset.albumId,
+                    userId: album.dataset.userId,
+                    hidden: album.classList.contains('hidden-album')
+                });
+                // Load the photos but keep the album hidden if it has the hidden-album class
+                const wasHidden = album.classList.contains('hidden-album');
+                if (wasHidden) {
+                    album.classList.remove('hidden-album');
+                }
+                await loadAlbumPhotos(album);
+                if (wasHidden) {
+                    album.classList.add('hidden-album');
+                }
+            }
+
+            // Set up the scroll observer for the first visible album
+            const firstAlbum = document.querySelector('.flickr-album:not(.hidden-album)');
+            if (firstAlbum) {
+                const container = firstAlbum.querySelector('.photos');
+                setupScrollDetection(container);
+            }
+
+            // Add click handlers for all media containers
+            mediaContainers.forEach((container, index) => {
+                container.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openModal(index);
+                });
+            });
+
+            // Handle scroll events for dynamic loading
+            window.addEventListener('scroll', () => {
+                if (isLoading) return;
+
+                const currentAlbum = document.querySelector(`.flickr-album[data-album-index="${currentAlbumIndex}"]`);
+                if (!currentAlbum) return;
+
+                const container = currentAlbum.querySelector('.photos');
+                if (container) {
+                    const sentinel = container.querySelector('.scroll-sentinel');
+                    if (sentinel && isInViewport(sentinel)) {
+                        loadMorePhotos(container);
+                    }
+                }
+            }, { passive: true });
+
+            // Check initial viewport state
+            window.addEventListener('load', () => {
+                const firstAlbum = document.querySelector('.flickr-album');
+                if (firstAlbum) {
+                    const container = firstAlbum.querySelector('.photos');
+                    if (container) {
+                        loadMorePhotos(container);
+                    }
+                }
+                adjustFooterPosition();
+            });
+
+            hideLoading();
+        }
+
+        // Start initialization
+        initializeGallery();
+    });
+</script>

@@ -1,0 +1,1187 @@
+:root {
+  /*--jumbo-logo-width: 400px !important;*/
+  --primary: #4793e0;
+  --secondary: #324147;
+
+  /* Additional variables the theme might use */
+  --primary-light: #6aa7e6;
+  --primary-dark: #3575b3;
+
+  /* These affect specific UI elements */
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --link-color: var(--primary);
+  --button-background: var(--primary);
+
+  --color-hero: #e9f2fb;
+  --toc-text: #212529;
+  --base-text: #5b5b5b;
+
+  --toolbar-height: 3.25rem;
+  --footer-bg: var(--secondary)
+}
+
+.flickr-page {
+  main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: auto;
+    transition: min-height 0.3s ease-out;
+  }
+
+  .hero .description h1 {
+    padding: 0;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+
+  body {
+    transition: height 0.3s ease-out;
+  }
+
+  .content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .gallery-wrapper {
+    flex-grow: 1;
+    width: 100%;
+    position: relative;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  body>footer {
+    flex-shrink: 0;
+    width: 100%;
+    position: relative;
+    background-color: var(--footer-bg);
+    color: var(--footer-fg);
+    padding: 1rem var(--container-margin);
+    margin-top: 0 !important;
+    /* 👈 Ensure no unwanted gap */
+    transition: height 0.3s ease-out;
+  }
+}
+
+/* Override specific theme elements if needed */
+.btn {
+  background-color: var(--primary);
+}
+
+.stroke-primary {
+  stroke: var(--primary);
+}
+
+.fill-primary {
+  fill: var(--primary);
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+.bg-primary {
+  background-color: var(--primary);
+}
+
+body>header {
+  background: var(--secondary);
+}
+
+.jumbo .jumbo-cover:after {
+  background-color: var(--secondary);
+}
+
+@-moz-document url-prefix() {
+  body {
+    background: #818182
+  }
+}
+
+.text-container {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+@media (max-width: 480px) {
+  .text-container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .text-container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
+.text-container ul li a {
+  color: var(--primary) !important;
+  text-decoration: underline !important;
+  
+  &:hover {
+    color: var(--primary-dark) !important;
+    text-decoration: underline !important;
+  }
+  
+  &:visited {
+    color: var(--primary) !important;
+    text-decoration: underline !important;
+  }
+}
+.workshop-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    border: 2px solid #aaa;
+    padding: 15px;
+    box-sizing: border-box; /* This ensures consistent width */
+}
+
+.speaker-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 35px;
+    flex-wrap: wrap;
+}
+
+.speaker-info img {
+    height: 170px;
+    width: 170px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.speaker-names {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+@media (max-width: 768px) {
+    .speaker-info {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+
+
+// For blog listings and content pages
+// Additional sections that might need background color override
+
+// Ensure main content area has proper width
+main {
+  width: 100%;
+  //margin: 0 auto;
+  background-color: #ffffff;
+
+  .hero {
+    background-color: var(--primary);
+    text-align: center;
+    color: #ffffff;
+
+    .description {
+      color: #212529;
+    }
+  }
+
+  .blogs {
+    background-color: #ffffff;
+    max-width: var(--theJdrSize);
+    margin: 0 auto;
+    //    padding: 0 24px;    
+  }
+
+  .content {
+    max-width: var(--theJdrSize);
+    margin: 0 auto;
+
+    a {
+      color: var(--link-color);
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    a:visited {
+      color: var(--link-color);
+    }
+  }
+}
+
+// Specifically target the protected content page
+#protectedContent::before {
+  display: none !important;
+  height: 0 !important;
+  margin: 0 !important;
+}
+
+iframe {
+  display: block;
+  margin: 0 auto;
+}
+
+
+.info,
+.news {
+  [id]:before {
+    display: none;
+  }
+}
+
+.blogs a.blog .img {
+  background-position: 50%;
+  background-size: cover;
+  display: inline-block;
+  --size: 16rem;
+  border-radius: var(--space-2);
+  flex: 0 0 var(--size, 16rem);
+  height: var(--size, 16rem);
+  overflow: hidden;
+  width: var(--size, 16rem)
+}
+
+.blogs a.blog .img>* {
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  width: 100%;
+}
+
+.blogs a.blog {
+  border-bottom: thin solid rgba(0, 0, 0, .125);
+  border-radius: var(--space-3);
+  color: inherit;
+  display: flex;
+  /* This makes it horizontal */
+  padding: var(--space-4);
+  text-decoration: none;
+}
+
+.blogs a.blog .info {
+  flex: 1 1 auto;
+  justify-content: center;
+  margin-left: var(--space-4)
+    /* This gives spacing between image and text */
+}
+
+.hero .img {
+  display: block;
+  max-height: 45vmin;
+  min-height: 45vmin;
+  overflow: hidden;
+}
+
+.hero .img picture,
+.hero .img img {
+  /* Target elements specifically instead of using > */
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  width: 100%;
+  display: block;
+  /* Remove inline spacing issues */
+}
+
+.blogs a.blog .img picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+.hero h1 small {
+  display: block
+}
+
+.page.coc {
+
+
+  main h1,
+  #TableOfContents,
+  main .content {
+    max-width: var(--theJdrSize);
+    margin: 0 auto;
+  }
+
+
+  .content {
+
+    p {
+      margin-left: var(--space-4);
+      text-align: justify;
+
+    }
+
+    ul {
+      margin-left: 2rem;
+
+      li {
+        line-height: 1.25;
+      }
+    }
+  }
+}
+
+@media (max-width: 1600px) {
+  .page .content {
+    padding: 0 .5em
+  }
+}
+
+.location .map img {
+  width: 100%;
+  /* Make the image span the full width of its container */
+  height: auto;
+  /* Maintain the image's aspect ratio */
+  display: block;
+  /* Avoid inline spacing */
+  object-fit: cover;
+  /* Optional: Ensures the image fills its container */
+}
+
+@media screen and (max-width: 768px) {
+  .blogs a.blog .img {
+    --size: 8rem;
+    /* Reduce the image size for smaller screens */
+    width: 100%;
+    /* Ensure the image spans the container width */
+    max-width: var(--size, 8rem);
+    /* Limit maximum size */
+    height: var(--size, 16rem);
+    margin: 0 auto;
+    /* Center the image */
+  }
+}
+
+@media (max-width: 768px) {
+  .hero .description {
+    padding: 0rem;
+  }
+}
+
+.news .content a {
+  align-self: center;
+}
+
+/*******************************
+********************************
+**   Flickr Gallery Styles
+********************************
+********************************/
+// Loading Spinner
+.loading-spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid var(--primary);
+  border-radius: 50%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 1000;
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.flickr-gallery {
+  width: 100%;
+  position: relative;
+  margin: 0 auto;
+
+  .flickr-album {
+    margin-bottom: 3rem;
+    justify-self: center;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    h3 {
+      margin-bottom: 1rem;
+      color: var(--base-text);
+      font-size: 1.5rem;
+      font-weight: 500;
+    }
+
+    .description {
+      color: var(--base-secondary-text);
+      margin-bottom: 1rem;
+    }
+  }
+
+  .photos {
+    display: grid !important;
+    //grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) !important;
+    gap: 1rem !important;
+    margin: 0 auto;
+    padding: 1rem;
+    width: 95%;
+    max-width: 1200px;
+
+    // Responsive grid columns
+    @media (min-width: 1200px) {
+      grid-template-columns: repeat(6, 1fr);
+      width: 90vw;
+    }
+
+    @media (min-width: 992px) and (max-width: 1199px) {
+      grid-template-columns: repeat(5, 1fr);
+      width: 90vw;
+    }
+
+    @media (min-width: 768px) and (max-width: 991px) {
+      grid-template-columns: repeat(4, 1fr);
+      width: 90vw;
+    }
+
+    @media (min-width: 576px) and (max-width: 767px) {
+      grid-template-columns: repeat(3, 1fr);
+      width: 90vw;
+    }
+
+    @media (max-width: 575px) {
+      grid-template-columns: repeat(2, 1fr);
+      width: 90vw;
+    }
+
+
+    .scroll-sentinel {
+      grid-column: 1 / -1;
+      height: 20px;
+      margin: 1rem 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .photo-container {
+      position: relative;
+      display: block;
+      width: 100%;
+      padding-bottom: 75%;
+      overflow: hidden;
+      border-radius: 8px;
+      background-color: var(--darken-1);
+      transition: transform 0.2s ease;
+
+      &.hidden {
+        display: none;
+      }
+
+      &:hover {
+        transform: scale(1.02);
+
+        img {
+          transform: scale(1.1);
+        }
+      }
+
+      img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: all 0.3s ease;
+
+        &.unloaded {
+          opacity: 0;
+        }
+
+        &:not(.unloaded) {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+// Gallery wrapper to ensure proper centering
+.gallery-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+
+  @media (max-width: 1600px) {
+    padding: 0 1rem;
+  }
+}
+
+// Ensure proper spacing on different screen sizes
+@media (max-width: 1600px) {
+  .gallery-wrapper {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .gallery-wrapper {
+    padding: 0 1rem;
+  }
+}
+
+.flickr-gallery .photos .photo-container {
+  /* Each grid item is a box with a 4:3 ratio, e.g. 4 / 3 = 1.3333 */
+  aspect-ratio: 4/3 !important;
+  width: 100% !important;
+  /* Fill the entire grid cell’s width */
+  position: relative !important;
+  overflow: hidden !important;
+  background-color: var(--darken-1) !important;
+  border-radius: 8px !important;
+  transition: transform 0.2s ease !important;
+
+  &:hover {
+    transform: scale(1.02) !important;
+  }
+}
+
+.flickr-gallery .photos .photo-container img {
+  /* Let the image fill that aspect-ratio box */
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+// Keep your existing loading spinner, modal, and other styles as they are
+
+// Modal Styles
+.photo-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 2rem;
+
+  .modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+
+    img {
+      max-width: 100%;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 4px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-prev,
+    .modal-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.3);
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      padding: 1rem;
+      transition: background 0.3s ease;
+    }
+
+    .modal-prev {
+      left: 1rem;
+    }
+
+    .modal-next {
+      right: 1rem;
+    }
+
+    .modal-prev:hover,
+    .modal-next:hover {
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    .close-modal {
+      position: absolute;
+      top: -2rem;
+      right: -2rem;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      transition: color 0.2s ease;
+    }
+
+    .close-modal:hover {
+      color: var(--primary);
+    }
+  }
+}
+
+
+// Error States
+.error-info {
+  background-color: #fff3f3;
+  color: #c00;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 4px;
+  border: 1px solid #ffcdd2;
+  font-size: 0.9rem;
+
+  &::before {
+    content: '⚠️ ';
+  }
+}
+
+// Dark mode adjustments
+@media (prefers-color-scheme: dark) {
+  .flickr-gallery {
+    .photo-container {
+      background-color: var(--darken-2);
+    }
+  }
+
+  .error-info {
+    background-color: rgba(255, 0, 0, 0.1);
+    border-color: rgba(255, 0, 0, 0.2);
+  }
+}
+
+// Print styles
+@media print {
+  .flickr-gallery {
+    .photos {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .photo-container {
+      page-break-inside: avoid;
+    }
+  }
+
+  .loading-spinner {
+    display: none;
+  }
+}
+
+.album-title {
+  width: 100%;
+  padding: 1rem 0;
+  margin: 0 auto;
+  color: var(--base-text);
+  font-size: 1.5rem;
+  font-weight: 500;
+  grid-column: 1 / -1;
+  text-align: center;
+}
+
+.flickr-album.hidden-album {
+  display: none;
+}
+
+.flickr-album+.flickr-album:not(.hidden-album) {
+  margin-top: 3rem;
+}
+
+.flickr-album+.flickr-album {
+  margin-top: 3rem;
+}
+
+.video-container {
+  position: relative;
+  aspect-ratio: 4/3; /* Ensure consistent aspect ratio */
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.video-thumbnail-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.video-container:hover .video-placeholder {
+  background-color: #2a2a2a;
+  /* Slightly lighter on hover */
+}
+
+.play-button-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
+}
+
+.play-button-overlay:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.play-icon {
+  width: 48px;
+  height: 48px;
+  color: white;
+  opacity: 0.85;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* Remove drop shadow and add a subtle glow effect */
+  filter: brightness(1.1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+}
+
+.video-container:hover .play-icon {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.1);
+  filter: brightness(1.2) drop-shadow(0 0 12px rgba(255, 255, 255, 0.4));
+}
+
+/* Video modal styles */
+.video-modal .modal-content {
+  width: 90vw;
+  max-width: 1200px;
+  aspect-ratio: 16/9;
+  background: black;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.video-modal video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block; // Add this
+  max-height: 90vh; // Add this
+}
+
+.video-modal .close-modal {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  color: white;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+}
+
+// Add responsive handling
+@media (max-height: 768px) {
+  .video-modal .modal-content {
+    width: 95vw;
+    height: auto;
+    max-height: 90vh;
+  }
+
+  .video-modal .close-modal {
+    top: -30px;
+    right: -30px;
+  }
+}
+
+// Add navigation button styles for videos
+.video-modal .modal-prev,
+.video-modal .modal-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 15px;
+  cursor: pointer;
+  z-index: 10;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.8);
+  }
+}
+
+.video-modal .modal-prev {
+  left: -50px;
+}
+
+.video-modal .modal-next {
+  right: -50px;
+}
+
+// Add loading state styles
+.video-modal.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+/*******************************
+********************************
+**   YouTube Gallery Styles
+********************************
+********************************/
+.youtube-container {
+  position: relative;
+  aspect-ratio: 16/9;
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+  
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+.youtube-thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.youtube-play-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
+  
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+}
+
+.video-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%; // 16:9 aspect ratio
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.photo-modal.youtube-modal .modal-content {
+  width: 90vw;
+  max-width: 1200px;
+  aspect-ratio: 16/9;
+  background: #000;
+  position: relative;
+}
+
+// Partner detail page logo standardization - Override existing theme styles
+.page.partners section.content {
+  margin: 2rem var(--container-margin);
+  max-width: none !important;
+  
+  @media (max-width: 1600px) {
+        padding: 0;
+  }
+
+  @media (max-width: 768px) {
+    margin: 1rem !important;
+  }
+}
+
+// Logo box fixes (keeping your existing logo CSS)
+.page.partners .header .card {
+  align-items: center;
+  background-color: #f8f8ff;
+  box-shadow: var(--box-shadow-1);
+  display: flex;
+  grid-area: logo;
+  height: 140px !important;
+  justify-content: center;
+  margin-right: 1em;
+  padding: 1.5rem !important;
+  width: 280px !important;
+  border-radius: 8px;
+  
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-origin: content-box !important;
+}
+
+// Responsive improvements - maintain consistent sizing with home page
+@media (max-width: 768px) {
+  .page.partners .header {
+    // Stack vertically on mobile
+    grid-template-areas: 
+      "logo"
+      "title" 
+      "website";
+    grid-template-columns: 1fr;
+    //text-align: center;
+    gap: 1rem;
+    
+  }
+  
+  .page.partners .header .card {
+    margin: 0 auto; // Center the logo
+    margin-bottom: 1rem;
+    width: 220px !important; // Match home page mobile grid (minmax 180px)
+    height: 120px !important; // Match home page mobile grid
+    padding: 1rem !important; // Match home page mobile grid
+  }
+  
+  .page.partners .header h1 {
+    align-self: center;
+    font-size: 2em; // Smaller heading on mobile
+  }
+  
+  .page.partners .header a {
+    align-self: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .page.partners .header .card {
+    width: 180px !important; // Match home page small mobile grid
+    height: 120px !important; // Keep consistent height
+    padding: 0.75rem !important;
+  }
+  
+  .page.partners .header h1 {
+    font-size: 1.5em;
+  }
+}
+
+// Partner logo standardization overrides
+.partners-group {
+  
+  // Change from flexbox to grid with max width constraint
+  ul {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 280px)); // Max width of 280px
+    gap: 2rem;
+    justify-content: center; // Center the grid
+    // Keep existing styles
+    list-style: none;
+    padding: 0;
+  }
+  
+  // Standardize all li elements regardless of category
+  ul li {
+    // Override the variable flex-basis with fixed approach
+    flex-basis: auto !important;
+    height: 140px !important; // Fixed height for all categories
+    margin: 0; // Remove margin since we're using gap
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  // Standardize image sizing - target img tags directly
+  .partner {
+    // Keep existing styles but add improvements
+    align-items: center; // Change from stretch to center
+    background-color: #f8f8ff;
+    box-shadow: var(--box-shadow-1);
+    color: transparent;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    padding: 0.75rem; // Reduced padding for narrower boxes
+    transition: all 0.3s ease; // Smooth all transitions
+    width: 100%;
+    height: 100%;
+    border-radius: 8px; // Add subtle border radius
+    
+    // Enhanced hover effect
+    &:focus,
+    &:hover {
+      box-shadow: var(--box-shadow-2);
+      transform: translateY(-2px); // Subtle lift effect
+    }
+    
+    // Target img tags directly
+    img {
+      max-height: 100px !important; // Increased max height
+      max-width: 180px !important; // Increased max width
+      width: auto !important;
+      height: auto !important;
+      object-fit: contain !important;
+      object-position: center !important;
+      transition: transform 0.3s ease; // Smooth scaling instead of filter
+    }
+    
+    // Subtle scale effect on hover instead of grayscale
+    &:hover img {
+      transform: scale(1.05);
+    }
+  }
+  
+  // Override category-specific sizing to use consistent heights
+  &.partner-platinium ul li {
+    height: 140px !important; // Same as others for consistency
+    flex-basis: auto !important;
+  }
+  
+  &.partner-gold ul li,
+  &.partner-startup ul li {
+    height: 140px !important; // Same as others for consistency
+    flex-basis: auto !important;
+  }
+  
+  // Add subtle category-specific styling
+  &.partner-gold .partner {
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    
+    &:hover {
+      border-color: rgba(255, 215, 0, 0.6);
+      box-shadow: 0 4px 16px rgba(255, 215, 0, 0.2);
+    }
+  }
+  
+  &.partner-platinium .partner {
+    border: 1px solid rgba(192, 192, 192, 0.3);
+    
+    &:hover {
+      border-color: rgba(192, 192, 192, 0.6);
+    }
+  }
+}
+
+// Responsive improvements
+@media (max-width: 768px) {
+  .partners-group ul {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+    gap: 1.5rem;
+  }
+  
+  .partners-group ul li {
+    height: 120px !important;
+  }
+  
+  .partners-group .partner {
+    padding: 0.5rem; // Reduced padding for mobile too
+    
+    img {
+      max-height: 80px !important; // Increased for mobile
+      max-width: 140px !important;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .partners-group ul {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1rem;
+  }
+  
+  .partners-group .partner {
+    img {
+      max-height: 70px !important;
+      max-width: 120px !important;
+    }
+  }
+}

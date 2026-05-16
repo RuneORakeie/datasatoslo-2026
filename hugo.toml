@@ -1,0 +1,5 @@
+baseURL = '/'
+locale = 'en-us'
+title = 'Data Saturday Oslo 2026'
+[server]
+  noHTTPCache = true

@@ -1,0 +1,16 @@
+{
+    "name": "Data Saturday Oslo 2025",
+    "short_name": "DSO 2025",
+    "icons": [
+      { "src": "/images/logos/datasatoslo_color48.png", "sizes": "48x48", "type": "image/png" },
+      { "src": "/images/logos/datasatoslo_color72.png", "sizes": "72x72", "type": "image/png" },
+      { "src": "/images/logos/datasatoslo_color96.png", "sizes": "96x96", "type": "image/png" },
+      { "src": "/images/logos/datasatoslo_color144.png", "sizes": "144x144", "type": "image/png" },
+      { "src": "/images/logos/datasatoslo_color192.png", "sizes": "192x192", "type": "image/png" },
+      { "src": "/images/logos/datasatoslo_color512.png", "sizes": "512x512", "type": "image/png" }
+    ],
+    "start_url": "./?utm_source=web_app_manifest",
+    "theme_color": "#4793e0",
+    "background_color": "#FFF",
+    "display": "standalone"
+  }

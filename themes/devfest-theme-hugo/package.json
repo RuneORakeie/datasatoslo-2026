@@ -1,0 +1,46 @@
+{
+  "name": "devfest-theme-hugo",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Hugo theme for DevFest sites",
+  "scripts": {
+      "build": "npm run build:css && npm run build:js",
+      "build:css": "sass --load-path=node_modules src/styles/theme.scss:static/theme.css && postcss static/theme.css -o static/theme.css --config postcss.config.js --no-map",
+      "build:js": "rollup -c",
+      "watch": "npm run watch:css & npm run watch:js",
+      "watch:css": "sass src/styles/theme.scss:static/css/style.min.css --watch",
+      "watch:js": "rollup -c -w --bundleConfigAsCjs",
+      "preinstall": "npx npm-force-resolutions"
+  },
+  "dependencies": {
+    "core-js": "^3.33.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "autoprefixer": "^10.4.16",
+    "sass": "^1.71.1",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.4.31",
+    "postcss-cli": "^10.1.0",
+    "postcss-preset-env": "^9.3.0",
+    "rollup": "^4.5.0",
+    "sass-mq": "^6.0.0",
+    "stylelint": "^15.11.0",
+    "lru-cache": "^10.0.1",
+    "cssnano": "^7.0.6"
+  },
+  "resolutions": {
+    "glob": "^10.3.10",
+    "rimraf": "^6.0.1"
+  },
+  "browserslist": [
+    "last 2 years",
+    "> 1%",
+    "not ie > 0",
+    "not dead"
+  ]
+}

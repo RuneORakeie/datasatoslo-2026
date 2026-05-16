@@ -1,0 +1,192 @@
+{{ define "main" }}
+<div class="hero">
+    <h1>{{ $.Page.Params.Title }}</h1>
+    <div class="description">
+        {{ .Content }}
+    </div>
+</div>
+
+<div class="album-list">
+    <div class="content">
+        <div class="album-entries">
+            {{ range .Pages.ByDate.Reverse }}
+            <a href="{{ .RelPermalink }}" class="album-entry">
+                <div class="img">
+                    {{ if .Params.cover_photo }}
+                        {{ $size := "b" }}
+                        {{ $server := index (split .Params.cover_photo "_") 0 }}
+                        {{ $id := index (split .Params.cover_photo "_") 1 }}
+                        {{ $secret := index (split .Params.cover_photo "_") 2 }}
+                        <img src="https://live.staticflickr.com/{{ $server }}/{{ $id }}_{{ $secret }}_{{ $size }}.jpg"
+                            alt="{{ .Title }}" loading="lazy">
+                    {{ else if .Params.yt_thumbnail }}
+                        <img src="https://img.youtube.com/vi/{{ .Params.yt_thumbnail }}/maxresdefault.jpg"
+                            alt="{{ .Title }}" loading="lazy">
+                    {{ else }}
+                        <div class="no-image">No preview available</div>
+                    {{ end }}
+                </div>
+
+                <div class="info">
+                    <h2>{{ .Title }}</h2>
+                    {{ with .Date }}
+                    {{ end }}
+                    {{ with .Description }}
+                    <p>{{ . }}</p>
+                    {{ end }}
+                    {{ with .Params.brief }}
+                    <p class="brief">{{ . }}</p>
+                    {{ end }}
+                </div>
+            </a>
+            {{ end }}
+        </div>
+    </div>
+</div>
+
+<style>
+    .album-list {
+        width: 100%;
+        max-width: var(--theJdrSize);
+        margin: 0 auto;
+        padding: 2rem 1rem;
+    }
+
+    .album-entries {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .album-entry {
+        display: flex;
+        gap: 2rem;
+        text-decoration: none;
+        color: inherit;
+        background: white;
+        border-radius: 8px;
+        padding: 1.5rem;
+        transition: transform 0.2s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .album-entry:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .album-entry .img {
+        background-position: 50%;
+        background-size: cover;
+        display: inline-block;
+        --size: 16rem;
+        border-radius: var(--space-2);
+        flex: 0 0 var(--size, 16rem);
+        height: var(--size, 16rem);
+        overflow: hidden;
+        width: var(--size, 16rem)
+    }
+
+    .album-entry .img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    /* Add this for YouTube thumbnails */
+    .album-entry .img img[src*="youtube"] {
+    object-fit: contain;
+    background: #000;
+    }
+
+    .album-entry .img .no-image {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--base-text);
+        font-style: italic;
+    }
+
+    .album-entry:hover .img img {
+        transform: scale(1.05);
+    }
+
+    .album-entry .info {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .album-entry .info h2 {
+        margin: 0 0 0.5rem;
+        color: var(--color-primary);
+    }
+
+    .album-entry .info time {
+        display: block;
+        color: var(--base-text);
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+    }
+
+    .album-entry .info p {
+        margin: 0;
+        color: var(--base-text);
+        overflow-wrap: break-word;
+    }
+
+    .album-entry .info .brief {
+        margin-top: 1rem;
+        font-style: italic;
+    }
+
+    /* Responsive breakpoints */
+    @media (max-width: 1200px) {
+        .album-entry .img {
+            --size: 14rem;
+        }
+    }
+
+    @media (max-width: 992px) {
+        .album-entry .img {
+            --size: 12rem;
+        }
+
+        .album-entry {
+            gap: 1.5rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .album-entry {
+            gap: 1rem;
+        }
+
+        .album-entry .img {
+            --size: 10rem;
+            /* Reduce the image size for smaller screens */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .album-entry {
+            padding: 1rem;
+            gap: 0.75rem;
+        }
+
+        .album-entry .img {
+            --size: 6.5rem;
+        }
+
+        .album-entry .info h2 {
+            font-size: 1rem;
+        }
+
+        .album-entry .info .brief {
+            font-size: 0.85rem;
+        }
+    }
+</style>
+{{ end }}

@@ -1,0 +1,15 @@
+{{/* layouts/shortcodes/flickr-album.html */}}
+{{ $albumUrl := .Get 0 }}
+<div class="flickr-album">
+<!--
+    <script src="https://embedr.flickr.com/assets/client-code.js" async></script>
+    <a data-flickr-embed="true" data-header="true" data-footer="true" href="{{ $albumUrl }}" 
+       class="flickr-embed-frame" style="width:100%">
+    </a>
+-->
+    <a data-flickr-embed="true" data-header="true" data-footer="true" href="{{ $albumUrl }}" title="Data Saturday Oslo 2024">
+        <img src="https://live.staticflickr.com/65535/53983304449_c82a3a1807_z.jpg" width="640" height="480" alt="Data Saturday Oslo 2024"/>
+    </a>
+    <script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
+</div>
+

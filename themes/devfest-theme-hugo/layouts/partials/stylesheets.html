@@ -1,0 +1,5 @@
+<link rel="stylesheet" href="{{ .Site.BaseURL }}theme.css" media="all" charset="UTF-8">
+{{ with resources.Get "scss/custom.scss" }}
+  {{ $custom := . | css.Sass | resources.Minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $custom.RelPermalink }}" media="all" charset="UTF-8">
+{{ end }}

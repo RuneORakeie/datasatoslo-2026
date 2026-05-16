@@ -1,0 +1,37 @@
+// src/styles/_breakpoints.scss
+@use "sass:meta";
+@use "sass:map";
+
+$breakpoints: (
+  mobile:  320px,
+  sm:      480px,
+  tablet:  740px,
+  md:      768px,
+  desktop: 980px,
+  lg:      1024px,
+  wide:    1300px,
+  xl:      1600px
+);
+
+@mixin respond($until: false) {
+  @if meta.type-of($until) == "string" {
+    @if map.has-key($breakpoints, $until) {
+      @media (max-width: map.get($breakpoints, $until)) {
+        @content;
+      }
+    }
+  } @else if meta.type-of($until) == "number" {
+    @media (max-width: $until) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+// Add an alias for backward compatibility
+@mixin mq($until: false) {
+  @include respond($until) {
+    @content;
+  }
+}

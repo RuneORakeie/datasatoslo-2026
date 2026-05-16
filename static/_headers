@@ -1,0 +1,10 @@
+/*
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-eval' https://storage.googleapis.com/workbox-cdn/ 'nonce-{{.Nonce}}' 'strict-dynamic'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; media-src 'self' https://*.flickr.com https://*.staticflickr.com; frame-ancestors 'none';
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+/sw.js
+  Cache-Control: no-cache
+  Service-Worker-Allowed: /

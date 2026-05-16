@@ -1,0 +1,21 @@
+{{ define "main" }}
+<div class="flickr-page">
+  <div class="hero">
+    <h1>{{ .Title }}</h1>
+    <div class="description">
+      <h1>
+        <small>{{ .Params.brief }}</small>
+      </h1>
+      {{- if .Params.toc }}
+      <hr>
+      {{ .TableOfContents }} 
+      {{ end }}
+    </div>
+  </div>
+
+  <section class="content">
+    {{ .Content }}
+    {{ partial "flickr-gallery.html" . }}
+  </section>
+</div>
+{{ end }}
