@@ -1,13 +1,51 @@
 .page.partners {
+  display: grid;
+  gap: 1.25rem;
+
+  .back-to-sponsors {
+    margin: 0;
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-weight: 500;
+    }
+  }
+
+  > section {
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    border: 1px solid color-mix(in srgb, var(--base-secondary-text) 18%, white);
+    border-radius: 1rem;
+    box-shadow: var(--box-shadow-1);
+    padding: 1.1rem 1.25rem;
+
+    h2 {
+      margin-top: 0;
+      margin-bottom: 0.85rem;
+      font-size: 1.1rem;
+      letter-spacing: 0.01em;
+      color: var(--base-secondary-text);
+    }
+  }
 
   .header {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    padding: 0;
     display: grid;
     grid-template-columns: auto 1fr;
     grid-template-areas: "logo title" "logo website";
     align-items: center;
 
     .card {
-      background-color: ghostwhite;
+      background-color: #f3f6fa;
+      background-repeat: no-repeat;
+      background-position: 50% 50%;
+      background-size: contain;
+      border: 1px solid #d5dde8;
+      border-radius: 0.75rem;
       grid-area: logo;
       height: 8em;
       width: 12em;
@@ -41,6 +79,17 @@
   }
 
   .content {
+    p {
+      margin-top: 0;
+      margin-bottom: 0.8rem;
+      line-height: 1.65;
+    }
+
+    p:first-child {
+      font-size: 1.06rem;
+      font-weight: 500;
+      color: var(--base-text);
+    }
 
     img {
       max-width: 25vw;
@@ -49,6 +98,73 @@
   }
 
   .why {
+    background: linear-gradient(180deg, #f8fbff 0%, #f4f8ff 100%);
+    border-color: color-mix(in srgb, var(--primary) 25%, white);
+
+    .endorsement {
+      margin: 0;
+      max-width: 100%;
+      padding: 1.5rem 1.7rem 1.2rem;
+      background: linear-gradient(160deg, #ffffff 0%, #f7faff 100%);
+      border: 1px solid rgba(25, 118, 210, 0.18);
+      border-radius: 1rem;
+      box-shadow: 0 12px 24px -16px rgba(15, 23, 42, 0.45);
+      position: relative;
+      overflow: hidden;
+
+      &::after {
+        content: "Sponsor endorsement";
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0.32rem 0.7rem;
+        font-size: 0.68rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #ffffff;
+        background: color-mix(in srgb, var(--primary) 88%, black);
+        border-bottom-left-radius: 0.6rem;
+      }
+
+      &::before {
+        content: "\201C";
+        position: absolute;
+        top: 0.35rem;
+        left: 1rem;
+        font-size: 3.8rem;
+        line-height: 1;
+        color: color-mix(in srgb, var(--primary) 30%, white);
+        font-family: Georgia, serif;
+      }
+
+      p {
+        margin: 0;
+        padding-left: 1.5rem;
+        font-size: 1.05rem;
+        font-style: italic;
+        font-weight: 450;
+        line-height: 1.75;
+        color: var(--base-text);
+      }
+
+      footer {
+        margin-top: 1rem;
+        text-align: right;
+        border-top: 1px solid rgba(25, 118, 210, 0.25);
+        padding-top: 0.7rem;
+
+        cite {
+          font-style: normal;
+          font-weight: 700;
+          letter-spacing: 0.02em;
+          color: color-mix(in srgb, var(--primary) 58%, var(--base-text));
+
+          &::before {
+            content: "\2014\00A0";
+          }
+        }
+      }
+    }
   }
 
   .socials {
@@ -57,11 +173,33 @@
       list-style: none;
       padding-left: 0;
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
-      font-size: 2em;
+      gap: 0.85rem;
 
       li {
-        margin: .25em;
+        margin: 0;
+
+        .social {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.45rem;
+          color: var(--base-text);
+          font-size: 1rem;
+          font-weight: 600;
+          text-decoration: none;
+
+          &:hover,
+          &:focus {
+            color: var(--primary);
+            text-decoration: underline;
+          }
+
+          .icon {
+            width: 1.1rem;
+            height: 1.1rem;
+          }
+        }
       }
     }
   }
@@ -76,9 +214,11 @@
       padding-left: 0;
 
       .job {
-        padding: .5em;
-        margin: .5em;
-        box-shadow: .125em .125em .25em rgba(0, 0, 0, .5);
+        padding: .7em .8em;
+        margin: .3em;
+        border: 1px solid color-mix(in srgb, var(--base-secondary-text) 18%, white);
+        border-radius: .75rem;
+        box-shadow: var(--box-shadow-1);
         display: flex;
         flex-direction: column;
 
@@ -103,6 +243,26 @@
 
 
       }
+    }
+  }
+
+  @media (min-width: 72rem) {
+    grid-template-columns: 1.15fr 1fr;
+    gap: 1.35rem;
+
+    .header,
+    .socials,
+    .jobs {
+      grid-column: 1 / -1;
+    }
+
+    .content {
+      grid-column: 1;
+    }
+
+    .why {
+      grid-column: 2;
+      align-self: start;
     }
   }
 }

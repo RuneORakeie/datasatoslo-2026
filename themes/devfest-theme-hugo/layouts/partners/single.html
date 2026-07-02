@@ -1,5 +1,12 @@
 {{ define "main" }}
 
+<nav class="back-to-sponsors" aria-label="Sponsor navigation">
+	<a href='{{ printf "%s#partners" (relURL "/") }}' class="btn">
+		{{ partial "icon.html" "home" }}
+		Back to sponsors
+	</a>
+</nav>
+
 <section class="header">
 	{{- $img := "" -}}
 	{{- if .Params.logo -}}
@@ -26,7 +33,12 @@
 {{ if .Params.why }}
 <section class="why">
 	<h2>{{index site.Data.partner "en" "why" }}</h2>
-	<p>{{ .Params.why }}</p>
+	<blockquote class="endorsement">
+		<p>{{ .Params.why }}</p>
+		<footer>
+			<cite>{{ .Title }}</cite>
+		</footer>
+	</blockquote>
 </section>
 {{ end }}
 
