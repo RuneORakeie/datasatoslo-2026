@@ -1121,7 +1121,7 @@ iframe {
   }
   
   // Override category-specific sizing to use consistent heights
-  &.partner-platinium ul li {
+  &.partner-platinum ul li {
     height: 140px !important; // Same as others for consistency
     flex-basis: auto !important;
   }
@@ -1142,7 +1142,7 @@ iframe {
     }
   }
   
-  &.partner-platinium .partner {
+  &.partner-platinum .partner {
     border: 1px solid rgba(192, 192, 192, 0.3);
     
     &:hover {

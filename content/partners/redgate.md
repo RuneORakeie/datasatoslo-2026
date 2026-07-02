@@ -2,9 +2,9 @@
 draft: true
 key: redgate
 title: Red Gate Software
-category: platinium
+category: platinum
 order: 1
-logo: /images/partners/platinium/redgate-logo.svg
+logo: /images/partners/platinum/redgate-logo.svg
 website: 'https://www.red-gate.com/'
 
 socials:

@@ -311,7 +311,7 @@ in the immediate vicinity of the centre of Toulouse and in a green environment.
 Show your partners
 
 ```hugo
-{{% partners categories="platinium,gold,soutien,media,communautes" %}}
+{{% partners categories="platinum,gold,soutien,media,communautes" %}}
 # Partners
 {{% /partners %}}
 ```

@@ -2,7 +2,7 @@
 title:  "{{ replace .TranslationBaseName "-" " " | title }}"
 date: {{ .Date }}
 type: partner
-category: platinium
+category: platinum
 website: 'https://www.airbus.com/'
 logo: /images/partners/logo-airbus.png
 socials:

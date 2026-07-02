@@ -3,18 +3,21 @@
 <div class="inner">
 {{ .Inner }}
 </div>
+{{ $partnerPages := where site.RegularPages "Section" "partners" }}
 
 {{ range (split (.Get "categories") ",") }}
+{{ $partners := where $partnerPages "Params.category" . }}
+{{ if gt (len $partners) 0 }}
 <section class="partners-group partner-{{ . }}">
 <h3 class="fancy">
 <span>{{ . }}</span>
 </h3>
 <ul>
-	{{ $partners := where site.RegularPages "Params.category" . }}
 {{ range sort $partners ".Params.order" "asc" }}
-<li>{{ partial "partner.html" . }}</li>
+<li{{ with .Params.sponsorshipVariant }} class="is-{{ . }}"{{ end }}>{{ partial "partner.html" . }}</li>
 {{ end }}
 </ul>
 </section>
+{{ end }}
 {{ end }}
 </section>

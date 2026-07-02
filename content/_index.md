@@ -82,7 +82,7 @@ Data Saturday Oslo is an event run by volunteers from the #datacommunity/#sqlcom
            price=50
            currency="Kr."
            info="50 first sold tickets"
-           soldOut=false
+           soldOut=true
            url="https://datasatoslo26.eventbrite.com" %}}</li>
 <li>{{% ticket name="Early Birds"
            starts="2025-08-01"
@@ -91,7 +91,7 @@ Data Saturday Oslo is an event run by volunteers from the #datacommunity/#sqlcom
            currency="Kr."
            info="51-100 first sold tickets"
            soldOut=false
-           notInSale=true
+           notInSale=false
            url="https://datasatoslo26.eventbrite.com" %}}</li>
 <li>{{% ticket name="Normal"
            starts="2026-01-01"
@@ -110,12 +110,11 @@ Data Saturday Oslo is an event run by volunteers from the #datacommunity/#sqlcom
 -->
 
 
-<!-- No sponsors confirmed yet
-{{% partners categories="platinium,gold" %}}
+{{% partners categories="platinum,gold,silver" %}}
 ### {#sponsors}
 ## Sponsors
 {{% /partners %}}
--->
+
  
 
 
