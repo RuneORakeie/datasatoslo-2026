@@ -7,6 +7,7 @@ order: 1
 logo: /images/partners/platinum/dbw_logo.png
 website: 'https://dbwatch.com/'
 why: >-
+We're sponsoring Data Saturday Oslo because we believe local technical communities matter. As a Norwegian company working with database teams around the world, dbWatch wants to support events where DBAs, developers, and data professionals can meet, share experience, learn from each other, and strengthen the data community in Norway.
 
 socials:
   - icon: linkedin
@@ -19,8 +20,8 @@ socials:
     link: 'https://www.youtube.com/channel/UCKr0Qz4Kzp2oPVPQei_2Sjg'
     name: dbWatch
 ---
-dbWatch was founded in Norway with a vision of delivering affordable and scalable database monitoring. From our headquarters in Oslo, we support customers around the world.  
+In 2001 a DBA decided that software could make database administration much easier, and dbWatch was born in Oslo, Norway. Decades of listening to DBAs has helped dbWatch grow into a complete database management solution.
 
-From 2001, dbwatch.com has grown from a small startup into a leading provider of database management solutions.
+With dbWatch Control Center, you can monitor your entire cross-platform environment from a single pane of glass, and scale as your environment inevitably grows. Control Center saves time by simplifying your workflows, automating repetitive tasks like reporting and maintenance, making secure access transparent, and more.
 
-Our journey began with a simple yet powerful idea: to create a tool that simplifies the complexities of database administration. We started by building a database reporting tool, which became a complete monitoring and maintenance solution.  Over the years, we have listened to database administrators so we can deliver solutions that truly make a difference.
+Today, dbWatch continues to be led by DBAs, and the software is still made by DBAs for DBAs.
