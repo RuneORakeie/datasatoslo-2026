@@ -6,6 +6,7 @@ menu:
 
 draft: false
 ---
+
 # Privacy Notice for DataSaturday Oslo
 
 ## Introduction
