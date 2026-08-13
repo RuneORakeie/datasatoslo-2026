@@ -12,7 +12,7 @@ menu:
 {{% jumbo img="/images/backgrounds/back-0.webp" imgLabel="Data Saturday Oslo 2026" %}}
 
 ## August 29th, 2026
-### Oslo - Venue TBA
+### Oslo - Bygdøy Allé 2 (the old Hydro building)
 <!--
 <a class="btn primary btn-lg" style="margin-top: 1em;" href="https://drive.google.com/file/d/1td_9Cr1b2JZvv0bCpOCJNDsEWgVgEp2Y/view?usp=sharing" target="_blank">Become a sponsor</a>
  -->
