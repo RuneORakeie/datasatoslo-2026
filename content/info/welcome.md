@@ -19,11 +19,13 @@ We have created a “I am speaking”-banner for you to share on social media if
 The background image is from the lake Sognsvann in the hills above Oslo. With the strong Aurora Borealis in this picture it is most likely taken in early October in 2021. This is the lake we plan to visit on our Sunday excursion. You can find it in the Speaker dashboard on <a href="https://sessionize.com/data-saturday-oslo-2026/dashboard" target="_blank">Sessionize</a>  
 
 # Venue
-The venue for 2026 is yet to be confirmed. We will update this page with details as soon as the venue is locked down.
+The venue for 2026 is located at Bygdøy Allé 2, 0257 Oslo.
+It is a tall concrete building from the 1960s, situated close to Solli Plass where both buses and trams stop. It is also only a 10 minute walk from Nationaltheateret train and metro stations.
 
 * There will be a speaker room for you to sit and prepare in peace.
 * There is a good internet connection at the venue.
-* All rooms will have decent screens with HDMI connections.
+* All rooms have decent screens with HDMI connections.
+  
 * Near the Oslo Central station you can also find the Oslo Opera, which if you have never been to Oslo is worth a visit. If nothing else take a walk on the roof.
 * The whole Bjørvika area boasts the Deichmanske library, the Munch Museum and is well worth a visit. You could go for a swim in the fjord if the weather is warm enough.
 
