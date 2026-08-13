@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 key: webstep
 title: Webstep
 category: gold
@@ -7,11 +7,7 @@ order: 40
 logo: /images/partners/gold/ws-image.png
 website: 'https://webstep.no/'
 why: >-
-  Data Saturday is a natural arena for us – a conference that brings together passionate professionals and promotes knowledge sharing in a constantly evolving field. We sponsor the event because we want to contribute to the professional community, support initiatives that build expertise, and be present where innovation happens.
-
-  This year, we’re also taking part with a talk on stage, and we’re looking forward to great conversations, new connections, and professional inspiration.
-
-  Feel free to stop by our booth – we’re excited to meet you!
+  Data Saturday Oslo is an important meeting place for the data and analytics community. For Webstep, it is natural to support a community where knowledge sharing, professional development, and networking are at the heart of what we do. We want both to contribute our own experiences and perspectives, and to learn from other talented people in the industry.
 
 socials:
   - icon: facebook
@@ -24,4 +20,4 @@ socials:
     link: 'https://www.instagram.com/webstep_as/'
     name: Webstep
 ---
-Webstep is a leading consultancy in technology and digitalization, with strong professional communities in areas such as data, analytics, and AI. We deliver solutions that help organizations make better decisions, streamline processes, and create value through data-driven insights.
+Webstep is a Norwegian consulting company with specialist expertise in technology and digitalization. We help organizations develop robust and future-ready solutions in areas such as data and analytics, artificial intelligence, cloud, software development, and architecture. Our consultants are experienced specialists who combine strong technical expertise with a solid understanding of our customers’ needs and businesses.

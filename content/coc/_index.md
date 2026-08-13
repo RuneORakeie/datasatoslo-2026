@@ -1,5 +1,5 @@
 ---
-title: CoC
+title: Code of Conduct
 menu:
   main:
     weight: 90
