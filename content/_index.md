@@ -24,7 +24,7 @@ menu:
 <a class="btn primary btn-lg" href="https://datasatoslo26.eventbrite.com" target="_blank">
     <svg class="icon icon-ticket"><use xlink:href="#ticket"></use></svg>Register for Saturday
 </a>
-git pull
+
 {{% /jumbo %}}
 
 {{% home-info what="Participants:300+,Sessions:36,Parallel Tracks:6" class="primary" %}}
