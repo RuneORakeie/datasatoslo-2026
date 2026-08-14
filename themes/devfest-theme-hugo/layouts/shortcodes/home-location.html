@@ -11,7 +11,7 @@
 		</div>
 
 		<div class="direction">
-			{{ .Get "address" }}
+			{{ .Get "address" | safeHTML }}
 
 			<a href="https://www.google.com/maps/dir/?api=1&destination={{ .Get "latitude" }},{{ .Get "longitude" }}"
 				class="btn btn-icon-only" target="_blank" rel="noopener noreferrer"

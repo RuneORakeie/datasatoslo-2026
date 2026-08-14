@@ -28,7 +28,7 @@ content:
         url: http://sqlsaturday.com/
         newTab: true
       - nameKey: footer_coc
-        url: /code-of-conduct/
+        url: /coc/
         newTab: false
 
   - title: footer_previous_edition

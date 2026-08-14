@@ -198,6 +198,18 @@ main {
     }
   }
 
+  .hero .venue-link,
+  .hero .venue-link a,
+  .hero .venue-link a:visited {
+    color: #ffffff !important;
+    text-decoration: underline !important;
+    text-underline-offset: 2px;
+  }
+
+  .hero .venue-link a:hover {
+    text-decoration: underline !important;
+  }
+
   .blogs {
     background-color: #ffffff;
     max-width: var(--theJdrSize);
@@ -215,6 +227,11 @@ main {
 
     a:hover {
       text-decoration: underline;
+    }
+
+    .location .direction > a:not(.btn-icon-only) {
+      text-decoration: underline;
+      text-underline-offset: 2px;
     }
 
     a:visited {

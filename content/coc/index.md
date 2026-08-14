@@ -1,9 +1,9 @@
 ---
 title: Code of Conduct
-menu: 
+menu:
   main:
     weight: 90
-
+    
 draft: false
 ---
 

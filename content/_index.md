@@ -12,7 +12,7 @@ menu:
 {{% jumbo img="/images/backgrounds/back-0.webp" imgLabel="Data Saturday Oslo 2026" %}}
 
 ## August 29th, 2026
-### Enora offices, Bygdøy allé 2, 0257 Oslo
+### <a href="#the-venue" style="color: #ffffff; text-decoration: underline; text-underline-offset: 2px;">Enora offices, Bygdøy allé 2, 0257 Oslo</a>
 <!--
 <a class="btn primary btn-lg" style="margin-top: 1em;" href="https://drive.google.com/file/d/1td_9Cr1b2JZvv0bCpOCJNDsEWgVgEp2Y/view?usp=sharing" target="_blank">Become a sponsor</a>
  -->
@@ -122,7 +122,7 @@ Data Saturday Oslo is an event run by volunteers from the #datacommunity/#sqlcom
 
 {{% home-location
     image="/images/map.webp"
-    address="Bygdøy allé 2, 0257 Oslo"
+    address="<a href=\"#the-venue\">Bygdøy allé 2, 0257 Oslo</a>"
     latitude="59.91455098392023"
     longitude="10.714530624972621" %}}
  
