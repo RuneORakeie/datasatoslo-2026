@@ -6,7 +6,7 @@
 	<meta name="MobileOptimized" content="320">
 	<meta name="Description" content="{{ .Site.Params.description }}">
 	<meta name="google-site-verification" content="{{ .Site.Params.googleWebmasterKey }}">
-	<meta property="og:title" content="Data Saturday Oslo 2026 - 29th August" />
+	<meta property="og:title" content="{{ with .Site.Params.ogTitle }}{{ . }}{{ else }}{{ .Site.Params.title }}{{ with .Site.Params.date }} - {{ . }}{{ end }}{{ end }}" />
 	<meta property="og:description"	content="Data Saturday Oslo is a training event for professionals who use data platform capabilities either on-premises or in one or more of the 3 major public clouds Amazon Web Services, Microsoft Azure or Google Cloud Platform." />
 	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 	<meta http-equiv="Expires" content="0">

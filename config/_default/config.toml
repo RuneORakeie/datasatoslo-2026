@@ -45,6 +45,7 @@ enableMissingTranslationPlaceholders = true
 [params]
   title = "Data Saturday Oslo 2026"
   date = "2026-08-29"
+  ogTitle = "Data Saturday Oslo 2026 - 29th August"
   description = "Data Saturday Oslo is a technical conference for current or coming data professionals. It is aimed at students, professionals or simply curious technophiles."
   images = ["/images/social-share.jpg"]
   email = "contactus@datasaturday.no"
